@@ -32,7 +32,7 @@ export class RobotsTxtBuilder {
    * @returns
    */
   generateRobotsTxt(config: IConfig): string {
-    const { additionalSitemaps, policies } = config.robotsTxtOptions!
+    const { additionalSitemaps, policies, disableHost } = config.robotsTxtOptions!
     const normalizedPolices = this.normalizePolicy(policies!)
 
     let content = ''
@@ -51,12 +51,11 @@ export class RobotsTxtBuilder {
       if (x.crawlDelay) {
         content += `Crawl-delay: ${x.crawlDelay}\n`
       }
-
-      content += '\n'
     })
 
     // Append host
-    content += `# Host\nHost: ${config.siteUrl}\n`
+    if(!disableHost)
+      content += `\n# Host\nHost: ${config.siteUrl}\n`
 
     if (additionalSitemaps && additionalSitemaps.length > 0) {
       content += `\n# Sitemaps\n`

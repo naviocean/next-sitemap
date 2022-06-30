@@ -1,6 +1,6 @@
 {
-  "name": "next-sitemap",
-  "version": "1.0.0",
+  "name": "@bhonetwork/next-sitemap",
+  "version": "1.0.3",
   "description": "Sitemap generator for next.js",
   "type": "module",
   "main": "./dist/cjs/index.js",
@@ -15,12 +15,7 @@
     "dist",
     "bin"
   ],
-  "repository": "https://github.com/iamvishnusankar/next-sitemap.git",
-  "funding": [
-    {
-      "url": "https://github.com/iamvishnusankar/next-sitemap.git"
-    }
-  ],
+  "repository": "https://github.com/naviocean/next-sitemap.git",
   "engines": {
     "node": ">=14.18"
   },
@@ -36,7 +31,7 @@
     "url": "https://www.iamvishnusankar.com"
   },
   "bugs": {
-    "url": "https://github.com/iamvishnusankar/next-sitemap/issues"
+    "url": "https://github.com/naviocean/next-sitemap/issues"
   },
   "license": "MIT",
   "sideEffects": false,

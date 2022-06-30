@@ -60,6 +60,12 @@ export interface IRobotsTxt {
   includeNonIndexSitemaps?: boolean
 
   /**
+   * Disable host in robots.txt
+   */
+  
+  disableHost?: boolean
+
+  /**
    * Custom robots.txt transformer
    */
   transformRobotsTxt?: (config: IConfig, robotsTxt: string) => Promise<string>
@@ -164,6 +170,11 @@ export interface IConfig {
    * @default true
    */
   generateIndexSitemap?: boolean
+
+  /**
+   * Additional sitemaps which need to be added to robots
+   */
+  additionalSitemaps?: string[]
 }
 
 export type AdditionalPathsConfig = Readonly<
