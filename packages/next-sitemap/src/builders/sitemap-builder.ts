@@ -11,7 +11,18 @@ export class SitemapBuilder {
    * @returns
    */
   withXMLTemplate(content: string): string {
-    return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">\n${content}</urlset>`
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+      xsi:schemaLocation="
+            http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    ${content}
+</urlset>`;
+    // return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">\n\t${content}\n</urlset>`
   }
 
   /**
@@ -22,7 +33,7 @@ export class SitemapBuilder {
   buildSitemapIndexXml(allSitemaps: string[]) {
     return `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${allSitemaps?.map((x) => `<sitemap><loc>${x}</loc></sitemap>`).join('\n')}
+  ${allSitemaps?.map((x) => `<sitemap>\n\t\t<loc>${x}</loc>\n\t\t<lastmod>${new Date().toISOString()}</lastmod>\n\t\t<changefreq>daily</changefreq>\n\t\t<priority>1</priority>\n\t</sitemap>`).join('\n\t')}
 </sitemapindex>`
   }
 
@@ -69,7 +80,7 @@ ${allSitemaps?.map((x) => `<sitemap><loc>${x}</loc></sitemap>`).join('\n')}
 
           if (field[key]) {
             if (key !== 'alternateRefs') {
-              fieldArr.push(`<${key}>${field[key]}</${key}>`)
+              fieldArr.push(`\n\t\t\t<${key}>${field[key]}</${key}>`)
             } else {
               const altRefField = this.buildAlternateRefsXml(
                 field.alternateRefs
@@ -81,9 +92,9 @@ ${allSitemaps?.map((x) => `<sitemap><loc>${x}</loc></sitemap>`).join('\n')}
         }
 
         // Append previous value and return
-        return `<url>${fieldArr.join('')}</url>\n`
+        return `<url>${fieldArr.join('')}\n\t</url>`
       })
-      .join('')
+      .join('\n\t')
 
     return this.withXMLTemplate(content)
   }
@@ -96,7 +107,7 @@ ${allSitemaps?.map((x) => `<sitemap><loc>${x}</loc></sitemap>`).join('\n')}
   buildAlternateRefsXml(alternateRefs: Array<IAlternateRef> = []): string {
     return alternateRefs
       .map((alternateRef) => {
-        return `<xhtml:link rel="alternate" hreflang="${alternateRef.hreflang}" href="${alternateRef.href}"/>`
+        return `\n\t\t\t<xhtml:link rel="alternate" hreflang="${alternateRef.hreflang}" href="${alternateRef.href}"/>`
       })
       .join('')
   }

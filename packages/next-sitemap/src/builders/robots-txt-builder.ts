@@ -38,7 +38,8 @@ export class RobotsTxtBuilder {
     let content = ''
 
     normalizedPolices.forEach((x) => {
-      content += `# ${x.userAgent}\nUser-agent: ${x.userAgent}\n`
+      if(x.userAgent)
+        content += `# ${x.userAgent}\nUser-agent: ${x.userAgent}\n`
 
       if (x.allow) {
         content += `${this.addPolicies('Allow', x.allow as string[])}`

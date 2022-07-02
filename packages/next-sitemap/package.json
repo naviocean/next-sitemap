@@ -1,6 +1,6 @@
 {
   "name": "@bhonetwork/next-sitemap",
-  "version": "1.0.3",
+  "version": "1.0.8",
   "description": "Sitemap generator for next.js",
   "type": "module",
   "main": "./dist/cjs/index.js",
