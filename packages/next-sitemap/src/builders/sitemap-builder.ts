@@ -21,7 +21,7 @@ export class SitemapBuilder {
             http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     ${content}
-</urlset>`;
+</urlset>`
     // return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">\n\t${content}\n</urlset>`
   }
 
@@ -33,7 +33,12 @@ export class SitemapBuilder {
   buildSitemapIndexXml(allSitemaps: string[]) {
     return `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  ${allSitemaps?.map((x) => `<sitemap>\n\t\t<loc>${x}</loc>\n\t\t<lastmod>${new Date().toISOString()}</lastmod>\n\t\t<changefreq>daily</changefreq>\n\t\t<priority>1</priority>\n\t</sitemap>`).join('\n\t')}
+  ${allSitemaps
+    ?.map(
+      (x) =>
+        `<sitemap>\n\t\t<loc>${x}</loc>\n\t\t<lastmod>${new Date().toISOString()}</lastmod>\n\t\t<changefreq>daily</changefreq>\n\t\t<priority>1</priority>\n\t</sitemap>`
+    )
+    .join('\n\t')}
 </sitemapindex>`
   }
 

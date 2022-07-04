@@ -62,7 +62,7 @@ export interface IRobotsTxt {
   /**
    * Disable host in robots.txt
    */
-  
+
   disableHost?: boolean
 
   /**

@@ -32,13 +32,14 @@ export class RobotsTxtBuilder {
    * @returns
    */
   generateRobotsTxt(config: IConfig): string {
-    const { additionalSitemaps, policies, disableHost } = config.robotsTxtOptions!
+    const { additionalSitemaps, policies, disableHost } =
+      config.robotsTxtOptions!
     const normalizedPolices = this.normalizePolicy(policies!)
 
     let content = ''
 
     normalizedPolices.forEach((x) => {
-      if(x.userAgent)
+      if (x.userAgent)
         content += `# ${x.userAgent}\nUser-agent: ${x.userAgent}\n`
 
       if (x.allow) {
@@ -55,8 +56,7 @@ export class RobotsTxtBuilder {
     })
 
     // Append host
-    if(!disableHost)
-      content += `\n# Host\nHost: ${config.siteUrl}\n`
+    if (!disableHost) content += `\n# Host\nHost: ${config.siteUrl}\n`
 
     if (additionalSitemaps && additionalSitemaps.length > 0) {
       content += `\n# Sitemaps\n`
