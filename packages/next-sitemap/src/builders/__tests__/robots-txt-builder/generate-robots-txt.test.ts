@@ -14,12 +14,10 @@ describe('RobotsTxtBuilder', () => {
       "# *
       User-agent: *
       Allow: /
-
       # black-listed-bot
       User-agent: black-listed-bot
       Disallow: /sub-path-1
       Disallow: /path-2
-
       # friendly-bot
       User-agent: friendly-bot
       Allow: /
