@@ -10,8 +10,9 @@ export class SitemapBuilder {
    * @param content
    * @returns
    */
-  withXMLTemplate(content: string): string {
+  withXMLTemplate(content: string, siteUrl?:string): string {
     return `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="${siteUrl}/sitemap.xsl"?>
 <urlset
       xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -30,13 +31,14 @@ export class SitemapBuilder {
    * @param allSitemaps
    * @returns
    */
-  buildSitemapIndexXml(allSitemaps: string[]) {
+  buildSitemapIndexXml(allSitemaps: string[], siteUrl?:string) {
     return `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="${siteUrl}/main-sitemap.xsl"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   ${allSitemaps
     ?.map(
       (x) =>
-        `<sitemap>\n\t\t<loc>${x}</loc>\n\t\t<lastmod>${new Date().toISOString()}</lastmod>\n\t\t<changefreq>daily</changefreq>\n\t\t<priority>1</priority>\n\t</sitemap>`
+        `<sitemap>\n\t\t<loc>${x}</loc>\n\t\t<lastmod>${new Date().toISOString()}</lastmod>\n\t</sitemap>`
     )
     .join('\n\t')}
 </sitemapindex>`
@@ -67,7 +69,7 @@ export class SitemapBuilder {
    * @param fields
    * @returns
    */
-  buildSitemapXml(fields: ISitemapField[]): string {
+  buildSitemapXml(fields: ISitemapField[], siteUrl?:string): string {
     const content = fields
       .map((x: ISitemapField) => {
         // Normalize sitemap field keys to stay consistent with <xsd:sequence> order
@@ -101,7 +103,7 @@ export class SitemapBuilder {
       })
       .join('\n\t')
 
-    return this.withXMLTemplate(content)
+    return this.withXMLTemplate(content, siteUrl)
   }
 
   /**

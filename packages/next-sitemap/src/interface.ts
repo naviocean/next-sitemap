@@ -228,7 +228,7 @@ export interface IExportable {
   url: string
   filename: string
   content: string
-  type: 'robots.txt' | 'sitemap' | 'sitemap-index'
+  type: 'robots.txt' | 'sitemap' | 'sitemap-index' | 'main-sitemap.xsl' | 'sitemap.xsl'
 }
 
 export interface IRuntimePaths {
@@ -237,6 +237,8 @@ export interface IRuntimePaths {
   ROUTES_MANIFEST: string
   ROBOTS_TXT_FILE: string
   EXPORT_MARKER: string
+  MAIN_STYLE_FILE?: string
+  STYLE_FILE?: string
   SITEMAP_INDEX_FILE?: string
   SITEMAP_INDEX_URL?: string
 }

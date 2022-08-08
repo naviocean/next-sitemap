@@ -11,6 +11,7 @@ import { generateUrl } from '../utils/url.js'
 import { combineMerge } from '../utils/merge.js'
 import { RobotsTxtBuilder } from './robots-txt-builder.js'
 import { defaultRobotsTxtTransformer } from '../utils/defaults.js'
+import { SitemapStyleBuilder } from './sitemap-style-builder.js'
 
 export class ExportableBuilder {
   exportableList: IExportable[] = []
@@ -20,6 +21,8 @@ export class ExportableBuilder {
   runtimePaths: IRuntimePaths
 
   sitemapBuilder: SitemapBuilder
+
+  sitemapStyleBuilder: SitemapStyleBuilder
 
   robotsTxtBuilder: RobotsTxtBuilder
 
@@ -31,6 +34,8 @@ export class ExportableBuilder {
     this.runtimePaths = runtimePaths
 
     this.sitemapBuilder = new SitemapBuilder()
+
+    this.sitemapStyleBuilder = new SitemapStyleBuilder()
 
     this.robotsTxtBuilder = new RobotsTxtBuilder()
 
@@ -49,7 +54,10 @@ export class ExportableBuilder {
     ]
 
     // Generate sitemap-index content
-    const content = this.sitemapBuilder.buildSitemapIndexXml(sitemaps)
+    const content = this.sitemapBuilder.buildSitemapIndexXml(
+      sitemaps,
+      this.config.siteUrl
+    )
 
     // Create exportable
     const item: IExportable = {
@@ -86,9 +94,29 @@ export class ExportableBuilder {
   }
 
   /**
-   * Register sitemaps with exportable builder
+   * Register sitemap main style with exportable builder
    * @param chunks
    */
+  async registerSitemapStyle() {
+    // Create exportable
+    const items: IExportable[] = [
+      {
+        type: 'main-sitemap.xsl',
+        filename: path.resolve(this.exportDir, 'main-sitemap.xsl'),
+        url: this.runtimePaths.MAIN_STYLE_FILE!,
+        content: this.sitemapStyleBuilder.buildMainStyle(),
+      },
+      {
+        type: 'sitemap.xsl',
+        filename: path.resolve(this.exportDir, 'sitemap.xsl'),
+        url: this.runtimePaths.MAIN_STYLE_FILE!,
+        content: this.sitemapStyleBuilder.buildStyle(),
+      },
+    ]
+    // Add to exportable list
+    this.exportableList.push(...items)
+  }
+
   async registerSitemaps(chunks: ISitemapField[][]) {
     // Check whether user config allows sitemap generation
     const hasIndexSitemap = this.config.generateIndexSitemap
@@ -104,7 +132,10 @@ export class ExportableBuilder {
         type: 'sitemap',
         url: generateUrl(this.config.siteUrl, baseFilename),
         filename: path.resolve(this.exportDir, baseFilename),
-        content: this.sitemapBuilder.buildSitemapXml(chunk),
+        content: this.sitemapBuilder.buildSitemapXml(
+          chunk,
+          this.config.siteUrl
+        ),
       } as IExportable
     })
 
