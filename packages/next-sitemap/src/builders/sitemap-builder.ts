@@ -10,7 +10,7 @@ export class SitemapBuilder {
    * @param content
    * @returns
    */
-  withXMLTemplate(content: string, siteUrl?:string): string {
+  withXMLTemplate(content: string, siteUrl?: string): string {
     return `<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="${siteUrl}/sitemap.xsl"?>
 <urlset
@@ -31,7 +31,7 @@ export class SitemapBuilder {
    * @param allSitemaps
    * @returns
    */
-  buildSitemapIndexXml(allSitemaps: string[], siteUrl?:string) {
+  buildSitemapIndexXml(allSitemaps: string[], siteUrl?: string) {
     return `<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="${siteUrl}/main-sitemap.xsl"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -69,7 +69,7 @@ export class SitemapBuilder {
    * @param fields
    * @returns
    */
-  buildSitemapXml(fields: ISitemapField[], siteUrl?:string): string {
+  buildSitemapXml(fields: ISitemapField[], siteUrl?: string): string {
     const content = fields
       .map((x: ISitemapField) => {
         // Normalize sitemap field keys to stay consistent with <xsd:sequence> order

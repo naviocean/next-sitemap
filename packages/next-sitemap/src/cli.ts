@@ -48,7 +48,6 @@ export class CLI {
     // Register sitemap exports
     await expoBuilder.registerSitemaps(chunks)
 
-
     // Register sitemap main style
     await expoBuilder.registerSitemapStyle()
 

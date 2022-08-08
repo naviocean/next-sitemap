@@ -1,7 +1,5 @@
-import type { ISitemapField, IAlternateRef } from '../interface.js'
-
 /**
- * Builder class to generate xml and robots.txt
+ * Builder class to generate xsl
  * Returns only string values
  */
 export class SitemapStyleBuilder {

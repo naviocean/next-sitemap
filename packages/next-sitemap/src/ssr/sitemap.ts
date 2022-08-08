@@ -11,10 +11,11 @@ import type { ISitemapField } from '../interface.js'
  */
 export const getServerSideSitemap = async (
   ctx: GetServerSidePropsContext,
-  fields: ISitemapField[]
+  fields: ISitemapField[],
+  siteUrl?: string
 ) => {
   // Generate sitemap xml
-  const contents = new SitemapBuilder().buildSitemapXml(fields)
+  const contents = new SitemapBuilder().buildSitemapXml(fields, siteUrl)
 
   return withXMLResponse(ctx, contents)
 }
